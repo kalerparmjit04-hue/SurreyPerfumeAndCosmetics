@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Cosmetics &amp; Perfumes | Surrey, BC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #2d3436; background-color: #fff; }
+        #netCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        nav { background: rgba(255,255,255,0.9); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.4rem; color: #1a1a1a; text-decoration: none; letter-spacing: 1px; }
+        .nav-links a { text-decoration: none; color: #636e72; font-size: 0.9rem; font-weight: 500; margin-left: 20px; transition: 0.3s; text-transform: uppercase; }
+        .nav-links a:hover { color: #d4af37; }
+        .hero { 
+            height: 70vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            padding: 0 20px; 
+            background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('https://images.unsplash.com/photo-1596462502278-27bfdc4033c8?auto=format&fit=crop&q=80&w=1000') center/cover; 
+        }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 1rem; color: #1a1a1a; }
+        .hero p { font-size: 1.2rem; max-width: 700px; margin-bottom: 2rem; color: #636e72; font-weight: 300; }
+
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; padding: 80px 10%; background: rgba(250, 250, 250, 0.8); }
+        .info-card { text-align: center; padding: 30px; background: rgba(255, 255, 255, 0.9); border: 1px solid #f0f0f0; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .info-card h3 { font-family: 'Playfair Display', serif; margin-bottom: 15px; color: #d4af37; }
+        .info-card a { color: #2d3436; text-decoration: none; font-weight: 600; display: block; margin-top: 5px; }
+
+        .btn { background: #1a1a1a; color: #fff; padding: 15px 35px; border-radius: 2px; text-decoration: none; font-weight: 600; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
+        .btn:hover { background: #d4af37; }
+
+        footer { text-align: center; padding: 40px; background: #1a1a1a; color: #fff; font-size: 0.8rem; letter-spacing: 1px; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="netCanvas" width="1440" height="820"></canvas>
+
+    <nav>
+        <a href="#" class="logo">Surrey Perfume and Cosmetics</a>
+        <div class="nav-links">
+            <a href="#visit">Visit Us</a>
+            <a href="tel:6477743255">Call Now</a>
+            <a href="mailto:SurreyPerfumeAndCosmetics@gmail.com">Email Us</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Affordable Luxury</h1>
+        <p>Premium Cosmetics &amp; Designer Perfumes curated for you. Visit our Surrey boutique for exclusive deals.</p>
+        <a href="tel:6477743255" class="btn">Call 647-774-3255</a>
+    </header>
+
+    <section class="info-grid" id="visit">
+        <div class="info-card">
+            <h3>Our Boutique</h3>
+            <p>8338 120 St<br>Surrey, BC V3W 3P4</p>
+            <br>
+            <a href="https://maps.google.com/?cid=7030739675282428545&amp;g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ" target="_blank">Get Directions on Maps →</a>
+        </div>
+        <div class="info-card">
+            <h3>Contact Us</h3>
+            <p>Questions about stock?<br>Reach out to us today.</p>
+            <br>
+            <a href="tel:6477743255">647-774-3255</a>
+            <a href="mailto:SurreyPerfumeAndCosmetics@gmail.com" style="color: #d4af37; font-size: 0.9rem;">SurreyPerfumeAndCosmetics@gmail.com</a>
+        </div>
+        <div class="info-card">
+            <h3>What We Offer</h3>
+            <p>Authentic Perfumes<br>Premium Cosmetics<br>Affordable Pricing</p>
+        </div>
+    </section>
+
+    <footer>
+        2026 LUXE RETAIL COSMETICS
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('netCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, rows, cols;
+        const spacing = 40; 
+        const mouse = { x: -1000, y: -1000 };
+        const points = [];
+
+        function init() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            
+            cols = Math.ceil(width / spacing) + 1;
+            rows = Math.ceil(height / spacing) + 1;
+
+            points.length = 0;
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    points.push({
+                        baseX: x * spacing,
+                        baseY: y * spacing,
+                        x: x * spacing,
+                        y: y * spacing
+                    });
+                }
+            }
+        }
+
+        window.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            points.forEach(p => {
+                const dx = mouse.x - p.baseX;
+                const dy = mouse.y - p.baseY;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                const maxDist = 55;
+
+                if (dist < maxDist) {
+                    const lift = (maxDist - dist) / maxDist;
+                    p.x = p.baseX - (dx * lift * 2);
+                    p.y = p.baseY - (dy * lift * 2);
+                } else {
+                    p.x += (p.baseX - p.x) * 0.1;
+                    p.y += (p.baseY - p.y) * 0.1;
+                }
+            });
+
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(220, 200, 60, 0.3)'; 
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    const p = points[y * cols + x];
+                    if (x === 0) ctx.moveTo(p.x, p.y);
+                    else ctx.lineTo(p.x, p.y);
+                }
+            }
+            ctx.stroke();
+
+            ctx.beginPath();
+            for (let x = 0; x < cols; x++) {
+                for (let y = 0; y < rows; y++) {
+                    const p = points[y * cols + x];
+                    if (y === 0) ctx.moveTo(p.x, p.y);
+                    else ctx.lineTo(p.x, p.y);
+                }
+            }
+            ctx.stroke();
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', init);
+        init();
+        animate();
+    </script>
+<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;e3c1c9af36de41759418005494a48906&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+</body></html>
